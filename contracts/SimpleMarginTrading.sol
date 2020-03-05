@@ -155,7 +155,7 @@ contract SimpleMarginTrading
         // 2. verify swap
         uint256 wethBalance = weth.balanceOf(address(this));
         uint256 daiBorrowBalance = cdai.borrowBalanceCurrent(address(this));
-        require(wethBalance > quote.sellAmount, "Provided quote doesn't provide sufficient liquidity");
+        require(wethBalance >= quote.sellAmount, "Provided quote doesn't provide sufficient liquidity");
         require(quote.buyToken == address(dai), "Provided quote doesn't buy DAI");
         require(daiBorrowBalance < quote.buyAmount, "Provided quote doesn't provide sufficient liquidity");
         // 3. execute swap
@@ -178,7 +178,11 @@ contract SimpleMarginTrading
     }
 
     // handy function to get borrowed dai amount
-    function getBorrowBalance() public onlyowner returns (uint256) {
+    function getBorrowBalance()
+        public
+        onlyowner
+        returns (uint256)
+    {
         return cdai.borrowBalanceCurrent(address(this));
     }
 }
