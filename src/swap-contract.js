@@ -74,9 +74,12 @@ async function run(argv) {
     sellAmount: sellAmountWei,
     taker: owner,
   });
+
+  const headers = { "0x-api-key": [api - key] }; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+
   const quoteUrl = `${API_QUOTE_URL}?${qs}`;
   console.info(`Fetching quote ${quoteUrl.bold}...`);
-  const response = await fetch(quoteUrl);
+  const response = await fetch(quoteUrl, { headers });
   const quote = await response.json();
   console.info(`Received a quote with price ${quote.sellAmount}`);
 
